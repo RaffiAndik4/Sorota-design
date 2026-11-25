@@ -1,7 +1,7 @@
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
-import { navLinks } from '../../data/siteInfo'
+import { Link, useLocation } from 'react-router-dom'
+import { aboutLink, navLinks } from '../../data/siteInfo'
 import Logo from '../Logo'
 
 const pill =
@@ -24,7 +24,19 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
       : 'font-medium text-ink'
   }`
 
+// "Mentor" dan "Pesanan" berbagi halaman /mentor (tab Sesi saya), jadi status aktifnya dihitung dari path + query.
+function useIsActive() {
+  const { pathname, search } = useLocation()
+  const sesi = new URLSearchParams(search).get('tab') === 'sesi'
+  return (to: string, end?: boolean) => {
+    if (to.startsWith('/mentor?tab=sesi')) return (pathname === '/mentor' && sesi) || pathname.startsWith('/pesanan')
+    if (to === '/mentor') return (pathname === '/mentor' && !sesi) || (pathname.startsWith('/mentor/') && !pathname.startsWith('/pesanan'))
+    return end ? pathname === to : pathname === to || pathname.startsWith(to + '/')
+  }
+}
+
 export default function SiteNavbar() {
+  const isActive = useIsActive()
   // Menu HP otomatis tertutup saat pindah halaman (terbuka hanya untuk path tempat ia dibuka)
   const { pathname } = useLocation()
   const [openFor, setOpenFor] = useState<string | null>(null)
@@ -74,27 +86,38 @@ export default function SiteNavbar() {
       }`}
     >
       <div className="mx-auto max-w-6xl px-4 sm:px-8">
-        <div className={`${glass} relative grid h-16 grid-cols-[auto_1fr_auto] items-center gap-3 rounded-full pr-2.5 pl-6`}>
+        <div className={`${glass} relative grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-3 rounded-full px-6`}>
           <span aria-hidden className={sheen} />
 
-          <Link to="/" aria-label="Sorota, ke beranda" className="col-start-1 inline-flex min-h-11 items-center">
+          <Link to="/" aria-label="Sorota, ke beranda" className="col-start-1 inline-flex min-h-11 items-center justify-self-start">
             <Logo height={18} />
           </Link>
 
           <nav aria-label="Navigasi utama" className="col-start-2 hidden items-center gap-0.5 justify-self-center lg:flex">
             {navLinks.map((l) => (
-              <NavLink key={l.to} to={l.to} end={l.end} className={linkClass}>
+              <Link key={l.to} to={l.to} aria-current={isActive(l.to, l.end) ? 'page' : undefined} className={linkClass({ isActive: isActive(l.to, l.end) })}>
                 {l.label}
-              </NavLink>
+              </Link>
             ))}
+            {/* Di layar sedang (lg), tombol Tentang di kanan belum muncul, jadi tampil sebagai tautan biasa di sini */}
+            <Link
+              to={aboutLink.to}
+              aria-current={isActive(aboutLink.to) ? 'page' : undefined}
+              className={`${linkClass({ isActive: isActive(aboutLink.to) })} xl:hidden`}
+            >
+              {aboutLink.label}
+            </Link>
           </nav>
 
-          <div className="col-start-3 flex items-center justify-end gap-2">
+          <div className="col-start-3 -mr-3.5 flex items-center justify-end gap-2">
             <Link
-              to="/bantuan#kontak"
-              className={`${pill} hidden border border-white/70 bg-white/30 px-5 text-ink hover:bg-white/60 xl:inline-flex`}
+              to={aboutLink.to}
+              aria-current={isActive(aboutLink.to) ? 'page' : undefined}
+              className={`${pill} hidden border border-white/70 px-5 text-ink hover:bg-white/60 xl:inline-flex ${
+                isActive(aboutLink.to) ? 'bg-white/70' : 'bg-white/30'
+              }`}
             >
-              Kontak <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden />
+              {aboutLink.label} <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden />
             </Link>
             <Link to="/mentor" className={`${pill} hidden bg-ink px-5 text-white hover:bg-primary-dark sm:inline-flex`}>
               Mulai konsultasi
@@ -114,20 +137,18 @@ export default function SiteNavbar() {
 
         {open && (
           <div id="mobile-menu" className={`${glass} mt-2 flex flex-col gap-1 rounded-3xl p-3 lg:hidden`}>
-            {navLinks.map((l) => (
-              <NavLink
+            {[...navLinks, aboutLink].map((l) => (
+              <Link
                 key={l.to}
                 onClick={() => setOpenFor(null)}
                 to={l.to}
-                end={l.end}
-                className={({ isActive }) =>
-                  `inline-flex min-h-11 items-center rounded-xl px-3 text-small hover:bg-white/50 ${
-                    isActive ? 'bg-white/60 font-semibold text-primary-darker' : 'font-medium text-ink'
-                  }`
-                }
+                aria-current={isActive(l.to, (l as { end?: boolean }).end) ? 'page' : undefined}
+                className={`inline-flex min-h-11 items-center rounded-xl px-3 text-small hover:bg-white/50 ${
+                  isActive(l.to, (l as { end?: boolean }).end) ? 'bg-white/60 font-semibold text-primary-darker' : 'font-medium text-ink'
+                }`}
               >
                 {l.label}
-              </NavLink>
+              </Link>
             ))}
             <Link to="/mentor" onClick={() => setOpenFor(null)} className={`${pill} mt-1 inline-flex justify-center bg-ink px-5 text-white`}>
               Mulai konsultasi

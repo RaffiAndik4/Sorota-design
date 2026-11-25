@@ -46,7 +46,7 @@ export default function MentorPhotoCard({
       <Link
         to={href}
         aria-label={`Lihat profil ${name}`}
-        className="relative block aspect-[4/3] overflow-hidden"
+        className="relative block aspect-square overflow-hidden sm:aspect-[4/3]"
       >
         {photo ? (
           <img
@@ -61,35 +61,39 @@ export default function MentorPhotoCard({
             aria-hidden
             className={`flex size-full items-center justify-center bg-linear-to-br ${gradients[tone % gradients.length]}`}
           >
-            <span className="text-[56px] font-semibold tracking-tight text-ink/70 transition-transform duration-300 motion-safe:group-hover:scale-105">
+            <span className="text-4xl font-semibold sm:text-[56px] tracking-tight text-ink/70 transition-transform duration-300 motion-safe:group-hover:scale-105">
               {initials(name)}
             </span>
           </div>
         )}
-        <span className="absolute top-3 left-3">
-          <Badge tone="neutral">{category}</Badge>
+        <span className="absolute top-2 left-2 rounded-full bg-card/95 px-2 py-0.5 text-[11px] leading-4 font-medium text-ink shadow-xs sm:top-3 sm:left-3 sm:px-2.5 sm:py-0.5 sm:text-caption">
+          {category}
         </span>
       </Link>
 
-      <div className="flex flex-1 flex-col gap-3 p-5">
+      <div className="flex flex-1 flex-col gap-2 p-3 sm:gap-3 sm:p-5">
         <div>
-          <h3 className="text-h3 text-ink">{name}</h3>
-          <p className="mt-0.5 line-clamp-2 text-small text-muted-foreground">
+          <h3 className="line-clamp-2 text-small leading-snug font-semibold text-ink sm:line-clamp-none sm:text-h3">
+            {name}
+          </h3>
+          <p className="mt-0.5 line-clamp-2 text-caption text-muted-foreground sm:text-small">
             {headline}
           </p>
         </div>
         {rating !== undefined && <Rating value={rating} count={reviews} />}
-        <ul className="flex flex-wrap gap-2" aria-label="Topik">
+        <ul className="hidden flex-wrap gap-2 sm:flex" aria-label="Topik">
           {topics.map((t) => (
             <li key={t}>
               <Badge>{t}</Badge>
             </li>
           ))}
         </ul>
-        <div className="mt-auto border-t border-border pt-4">
-          <div className="flex items-center justify-between gap-3">
+        <div className="mt-auto border-t border-border pt-3 sm:pt-4">
+          <div className="flex flex-col items-start gap-0.5 sm:flex-row sm:items-center sm:justify-between sm:gap-3">
             <p className="text-small whitespace-nowrap text-ink">
-              <span className="text-h3">{price}</span>{" "}
+              <span className="text-small font-semibold sm:text-h3">
+                {price}
+              </span>{" "}
               <span className="text-muted-foreground">/ sesi</span>
             </p>
             <Link

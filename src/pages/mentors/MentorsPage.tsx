@@ -13,6 +13,7 @@ import {
 import { useId, useMemo, useState, type FormEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Button from "../../components/ui/Button";
+import ChipScroller from "../../components/ui/ChipScroller";
 import OrdersList from "../../components/orders/OrdersList";
 import Select from "../../components/ui/Select";
 import MentorPhotoCard from "../../components/ui/MentorPhotoCard";
@@ -293,18 +294,14 @@ export default function MentorsPage() {
 
               {/* Kategori: satu baris ramping (bisa digeser di HP) */}
               <div className="mt-3 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-                <div
-                  role="group"
-                  aria-label="Filter kebutuhan usaha"
-                  className="min-w-0 overflow-x-auto pb-1"
-                >
-                  <ul className="flex w-max min-w-full gap-2 lg:w-auto lg:flex-wrap">
+                <ChipScroller label="Filter kebutuhan usaha" watch={kebutuhan}>
+                  <ul className="flex w-max gap-2 px-4 sm:px-8 lg:w-auto lg:flex-wrap lg:px-0">
                     {[{ id: "semua", label: "Semua" }, ...activeCategories].map(
                       (c) => {
                         const Icon = categoryIcons[c.id];
                         const on = kebutuhan === c.id;
                         return (
-                          <li key={c.id}>
+                          <li key={c.id} className="snap-start">
                             <button
                               type="button"
                               aria-pressed={on}
@@ -331,7 +328,7 @@ export default function MentorsPage() {
                       },
                     )}
                   </ul>
-                </div>
+                </ChipScroller>
                 <Select
                   label="Urutkan mentor"
                   value={sort}
@@ -354,7 +351,7 @@ export default function MentorsPage() {
               </p>
 
               {shown.length > 0 ? (
-                <ul className="mt-4 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                <ul className="mt-4 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3">
                   {shown.map((m) => (
                     <li key={m.id}>
                       <MentorPhotoCard

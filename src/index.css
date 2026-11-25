@@ -140,6 +140,23 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Garis kursor ketik tidak muncul di teks biasa (mis. saat klik judul atau mode caret browsing); tetap ada di kolom isian */
+body {
+  caret-color: transparent;
+}
+input,
+textarea,
+select,
+[contenteditable] {
+  caret-color: var(--primary-darker);
+}
+
+/* Warna teks yang diblok/disorot: hijau muda Sorota dengan teks Dark (kontras tinggi) */
+::selection {
+  background: var(--primary-lighter);
+  color: var(--primary-dark);
+}
+
 /* Di @layer base supaya utilitas (mis. outline-none pada input yang dibungkus border) bisa menimpanya */
 @layer base {
   :focus-visible {

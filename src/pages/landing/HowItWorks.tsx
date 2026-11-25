@@ -1,4 +1,4 @@
-import { Clock, Info, User, Video, Wallet } from 'lucide-react'
+import { Clock, Copy, Info, User, Video, Wallet } from 'lucide-react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { usePrefersReducedMotion } from '../../hooks/useTypewriter'
 
@@ -14,27 +14,29 @@ const B = ({ children }: { children: ReactNode }) => (
 function PickMentor() {
   return (
     <div className="relative h-full">
-      {/* Gradasi hijau di belakang kartu */}
-      <div className="absolute -right-10 -bottom-12 size-72 rounded-full bg-[radial-gradient(circle,var(--primary-light)_0%,var(--primary-lighter)_45%,transparent_70%)] opacity-80 blur-2xl" />
-      <div className="absolute -top-10 -left-10 size-48 rounded-full bg-[radial-gradient(circle,var(--primary-lighter),transparent_70%)] opacity-70 blur-2xl" />
+      {/* Gradasi hijau di belakang kartu: memudar penuh di dalam area sendiri, jadi tidak terpotong di tepi (HP) */}
+      <div
+        aria-hidden
+        className="absolute inset-0 bg-[radial-gradient(ellipse_40%_42%_at_66%_64%,var(--primary-light),var(--primary-lighter)_55%,transparent_100%),radial-gradient(ellipse_28%_28%_at_28%_24%,var(--primary-lighter),transparent_100%)] opacity-70 md:-inset-8 md:blur-xl"
+      />
 
       <img
         src="/images/mentors/afdal-adam.webp"
         alt=""
         width={800}
         height={800}
-        className="absolute top-[1%] left-[7%] h-[86%] w-[40%] rounded-2xl object-cover object-[50%_20%] shadow-lg"
+        className="absolute top-[2%] left-[4%] h-[84%] w-[40%] rounded-2xl md:top-[1%] md:left-[7%] md:h-[86%] object-cover object-[50%_20%] shadow-lg"
       />
 
-      <span className="absolute top-[18%] left-[50%] z-10 rounded-full bg-primary-darker px-4 py-2 text-small font-semibold text-white shadow-md">
+      <span className="absolute top-[4%] left-[47%] z-10 rounded-full bg-primary-darker px-3 py-1.5 text-caption font-semibold md:top-[18%] md:left-[50%] md:px-4 md:py-2 md:text-small text-white shadow-md">
         Pilih mentor
       </span>
-      <svg aria-hidden viewBox="0 0 40 40" className="absolute top-[25%] left-[73%] z-10 size-8 text-ink" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <svg aria-hidden viewBox="0 0 40 40" className="absolute top-[14%] left-[76%] z-10 size-6 text-ink md:top-[25%] md:left-[73%] md:size-8" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <path d="M2 4c14 1 24 8 25 26" />
         <path d="M21 25l6 6 6-7" />
       </svg>
 
-      <div className="absolute right-[5%] bottom-[0%] w-[46%] rounded-2xl border border-white bg-card p-2.5 shadow-lg">
+      <div className="absolute right-[3%] bottom-[2%] w-[48%] rounded-2xl border border-white bg-card p-2 shadow-lg md:right-[5%] md:bottom-0 md:w-[46%] md:p-2.5">
         <div className="flex items-center justify-between">
           <span className="h-1.5 w-10 rounded-full bg-primary-lighter" />
           <span className="h-3 w-7 rounded-full bg-primary" />
@@ -110,22 +112,34 @@ function BookSession() {
   )
 }
 
-/** Langkah 3: sesi via Google Meet (memakai gambar mockup panggilan video) */
+/** Langkah 3: foto panggilan video + kartu "Sesi dikonfirmasi" yang menumpang di bawahnya */
 function StartSession() {
   return (
-    <div className="relative mx-auto h-[92%] w-[92%] translate-y-[4%] overflow-hidden rounded-3xl shadow-lg">
-      <img
-        src="/images/video-call.webp"
-        alt=""
-        width={1600}
-        height={900}
-        className="size-full origin-[50%_30%] scale-[1.5] object-cover object-[50%_22%]"
-      />
-      <div className="absolute right-3 bottom-3 flex items-center gap-2 rounded-lg bg-card/95 px-2.5 py-2 shadow-md">
-        <span className="flex size-6 items-center justify-center rounded-full bg-primary-subtle text-primary-darker">
-          <Video size={14} strokeWidth={1.75} />
-        </span>
-        <span className="text-caption font-semibold text-ink">Link Google Meet terkirim</span>
+    <div className="relative mx-auto h-full w-[92%]">
+      <div className="absolute inset-x-0 top-[3%] h-[72%] overflow-hidden rounded-3xl shadow-lg">
+        <img
+          src="/images/video-call.webp"
+          alt=""
+          width={1600}
+          height={900}
+          className="size-full origin-[50%_30%] scale-[1.5] object-cover object-[50%_22%]"
+        />
+      </div>
+
+      <div className="absolute inset-x-[6%] bottom-0 rounded-2xl border border-primary-lighter bg-primary-subtle p-3 shadow-lg md:p-3.5">
+        <div className="flex items-center gap-2">
+          <Video size={16} strokeWidth={1.75} className="shrink-0 text-primary-darker" />
+          <p className="text-small font-semibold text-ink">Sesi dikonfirmasi</p>
+        </div>
+        <div className="mt-2 flex items-center justify-between gap-2 rounded-xl border border-primary-lighter bg-card px-2.5 py-1.5">
+          <span className="flex min-w-0 items-center gap-1.5 text-caption font-medium text-ink">
+            <Video size={13} strokeWidth={1.75} className="shrink-0 text-primary-darker" />
+            <span className="truncate">meet.google.com/abc-defg-hij</span>
+          </span>
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-md border border-input px-2 py-0.5 text-[11px] font-medium text-ink">
+            <Copy size={11} strokeWidth={1.75} /> Salin
+          </span>
+        </div>
       </div>
     </div>
   )
