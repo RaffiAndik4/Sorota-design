@@ -1,0 +1,159 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/plus-jakarta-sans';
+
+/* =========================================================
+   Sorota design tokens - sumber tunggal (lihat docs/brand-guideline.md bagian 6)
+   ========================================================= */
+:root {
+  /* Brand Green */
+  --primary: #23b83d;
+  --primary-dark: #0a3d15;
+  --primary-darker: #18842b;
+  --primary-dark-shade: #1fa737;
+  --primary-light: #4ade63;
+  --primary-lighter: #b9f7c3;
+  --primary-subtle: #edfbef;
+
+  /* Ink & Neutrals */
+  --ink: #101510;
+  --muted-foreground: #586158;
+  --input: #dde5dd;
+  --border: #e2e8e2;
+  --muted: #f2f4f2;
+  --background: #fafafa;
+  --card: #ffffff;
+
+  /* Highlight */
+  --highlight: #facc15;
+  --highlight-light: #fde047;
+  --amber-700: #b45309;
+  --amber-100: #fef3c7;
+  --amber-50: #fffbeb;
+
+  /* Semantic */
+  --success: #16a34a;
+  --success-subtle: #dcfce7;
+  --warning: #f59e0b;
+  --warning-subtle: #fef3c7;
+  --destructive: #ef4444;
+  --destructive-subtle: #fee2e2;
+  --info: #2563eb;
+  --info-subtle: #dbeafe;
+}
+
+/* Animasi mengambang pelan untuk stiker di landing page */
+@theme {
+  --animate-float: float 6s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+}
+
+@theme inline {
+  --font-sans: 'Plus Jakarta Sans Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Shadow lembut berlapis (halaman: /design-system/radius-shadow) */
+  --shadow-xs: 0 1px 2px rgb(16 21 16 / 0.05);
+  --shadow-sm: 0 1px 2px rgb(16 21 16 / 0.06), 0 2px 4px rgb(16 21 16 / 0.04);
+  --shadow-md: 0 2px 4px rgb(16 21 16 / 0.05), 0 8px 16px -4px rgb(16 21 16 / 0.08);
+  --shadow-lg: 0 4px 8px rgb(16 21 16 / 0.05), 0 16px 32px -8px rgb(16 21 16 / 0.12);
+
+  /* Type scale (halaman: /design-system/typography). Display, H1, H2 fluid di mobile. */
+  --text-display: clamp(2.25rem, 1.5rem + 3vw, 3rem);
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 700;
+  /* Khusus landing page: judul hero dan judul tiap section, lebih besar dari skala standar */
+  --text-hero: clamp(2.5rem, 1.5rem + 4.6vw, 4.75rem);
+  --text-hero--line-height: 1.06;
+  --text-hero--letter-spacing: -0.025em;
+  --text-hero--font-weight: 700;
+  --text-section: clamp(2.125rem, 1.4rem + 3vw, 3.5rem);
+  --text-section--line-height: 1.1;
+  --text-section--letter-spacing: -0.02em;
+  --text-section--font-weight: 700;
+  --text-h1: clamp(1.875rem, 1.4rem + 1.9vw, 2.25rem);
+  --text-h1--line-height: 1.2;
+  --text-h1--letter-spacing: -0.015em;
+  --text-h1--font-weight: 700;
+  --text-h2: clamp(1.5rem, 1.25rem + 1vw, 1.75rem);
+  --text-h2--line-height: 1.25;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h2--font-weight: 600;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.35;
+  --text-h3--font-weight: 600;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-body--font-weight: 400;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  --text-small--font-weight: 400;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--font-weight: 500;
+  --text-caption--letter-spacing: 0.01em;
+
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-darker: var(--primary-darker);
+  --color-primary-dark-shade: var(--primary-dark-shade);
+  --color-primary-light: var(--primary-light);
+  --color-primary-lighter: var(--primary-lighter);
+  --color-primary-subtle: var(--primary-subtle);
+
+  --color-ink: var(--ink);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-background: var(--background);
+  --color-card: var(--card);
+
+  --color-highlight: var(--highlight);
+  --color-highlight-light: var(--highlight-light);
+  --color-amber-700: var(--amber-700);
+  --color-amber-100: var(--amber-100);
+  --color-amber-50: var(--amber-50);
+
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-destructive: var(--destructive);
+  --color-destructive-subtle: var(--destructive-subtle);
+  --color-info: var(--info);
+  --color-info-subtle: var(--info-subtle);
+}
+
+html {
+  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Di @layer base supaya utilitas (mis. outline-none pada input yang dibungkus border) bisa menimpanya */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--primary-darker);
+    outline-offset: 2px;
+  }
+}
+
+/* Progres garis langkah "Cara kerja" */
+@keyframes sorota-fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
