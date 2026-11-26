@@ -5,9 +5,7 @@ import MentorSearch from './MentorSearch'
 // Copy mengikuti docs/brand-guideline.md dan docs/sitemap-user-flow.md.
 // Tidak ada angka rating/ulasan/anggota karena belum ada data nyata.
 const copy = {
-  headlineTop: 'Bukan Sekadar Punya Ide.',
-  headlineMain: 'Temukan Arah Bisnismu.',
-  sub: 'Framework dan pendampingan bisnis untuk membantu kamu menemukan peluang, memvalidasi ide, dan menentukan langkah bisnis dengan lebih terukur.',
+  sub: 'Dapatkan sudut pandang baru dari mentor berpengalaman. Bahas kendala bisnismu dan temukan langkah selanjutnya bersama Sorota.',
 }
 
 // Latar: deretan pita vertikal bertepi tegas dengan garis tipis di antaranya. Di dalam tiap pita ada gradasi warna
@@ -85,18 +83,32 @@ export default function Hero() {
     >
       <Backdrop />
 
-      <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 px-4 pt-28 pb-24 text-center sm:px-8 sm:pb-36">
-        <h1 id="hero-title" className="text-hero text-balance text-ink">
-          <span className="block">{copy.headlineTop}</span>
-          <span className="block text-primary-darker">{copy.headlineMain}</span>
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-5 px-4 pt-24 pb-6 text-center sm:gap-8 sm:px-8 sm:pb-16">
+        {/* HP: huruf besar, lima baris yang dipenggal manual. Layar sm ke atas: tiga baris. */}
+        <h1
+          id="hero-title"
+          className="text-[length:min(9vw,2.5rem)] leading-[1.18] font-bold tracking-tight text-ink sm:text-[length:min(calc((100vw-5rem)/14),3.5rem)] sm:leading-[1.2] sm:whitespace-nowrap"
+        >
+          <span className="sm:block">
+            <b>Hadapi Tantangan <br className="sm:hidden" />
+            Bisnis</b>{' '}
+          </span>
+          <span className="sm:block">
+            <b>Bersama <br className="sm:hidden" />
+            Mentor yang Tepat.</b>
+          </span>
+          <span className="block text-primary-darker">
+            Temukan Arah <br className="sm:hidden" />
+            Bisnismu.
+          </span>
         </h1>
 
         <p className="max-w-2xl text-body text-muted-foreground md:text-lg">{copy.sub}</p>
 
         <MentorSearch />
 
-        {/* Foto mentor bertumpuk di dasar hero. Teks memakai jumlah mentor yang benar-benar ada, bukan angka klaim. */}
-        <div className="flex flex-col items-center gap-1.5 sm:absolute sm:inset-x-0 sm:bottom-28">
+        {/* Foto mentor bertumpuk di bawah pencarian. Teks memakai jumlah mentor yang benar-benar ada, bukan angka klaim. */}
+        <div className="mt-12 flex flex-col items-center gap-1.5 sm:mt-4 lg:relative lg:top-24">
           <ul className="flex -space-x-2" aria-hidden>
             {mentors.map((m) => (
               <li key={m.id}>

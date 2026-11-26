@@ -1,10 +1,14 @@
 import { ChevronUp, MessageCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { siteInfo } from '../../data/siteInfo'
 
 /** Pojok kanan bawah: tombol kembali ke atas (muncul setelah scroll) dan tombol bantuan via WhatsApp. */
 export default function FloatingActions() {
   const [showTop, setShowTop] = useState(false)
+  // Hanya halaman profil mentor yang punya bilah booking tetap di bawah (HP)
+  const { pathname } = useLocation()
+  const hasBottomBar = /^\/mentor\/[^/]+$/.test(pathname)
 
   useEffect(() => {
     let raf = 0
@@ -29,8 +33,8 @@ export default function FloatingActions() {
   }
 
   return (
-    // Di HP naik sedikit agar tidak menutupi bilah booking di halaman profil mentor
-    <div className="fixed right-4 bottom-24 z-40 flex flex-col items-end gap-3 sm:right-6 lg:bottom-6">
+    // Di HP dekat bawah (bottom-10); di profil mentor lebih tinggi agar tidak menutupi bilah booking
+    <div className={`fixed right-4 z-40 flex flex-col items-end gap-3 sm:right-6 lg:bottom-6 ${hasBottomBar ? 'bottom-24' : 'bottom-10'}`}>
       <button
         type="button"
         onClick={toTop}
