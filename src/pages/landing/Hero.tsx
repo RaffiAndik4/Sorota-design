@@ -108,7 +108,7 @@ export default function Hero() {
         <MentorSearch />
 
         {/* Foto mentor bertumpuk di bawah pencarian. Teks memakai jumlah mentor yang benar-benar ada, bukan angka klaim. */}
-        <div className="mt-12 flex flex-col items-center gap-1.5 sm:mt-4 lg:relative lg:top-24">
+        <div className="mt-12 flex flex-col items-center gap-1.5 sm:mt-4 lg:relative lg:top-12">
           <ul className="flex -space-x-2" aria-hidden>
             {mentors.map((m) => (
               <li key={m.id}>
